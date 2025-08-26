@@ -56,15 +56,19 @@ Each live importer:
 The new API endpoint is responsible for handling live evaluation requests.
 
 - **Input:**
-  - `purl_string` (required)
-  - `no_threading` (optional, default `false`)
+  - `purl` (required)
 - **Execution:**
-  - Checks `LIVE_IMPORTERS_REGISTRY` for importers whose `supported_types` match the PURL.
-  - Runs compatible importers in parallel unless `no_threading` is true.
+  - Checks ``LIVE_IMPORTERS_REGISTRY`` for importers whose ``supported_types`` match the PURL.
+  - Enqueues the pipelines runs of these live importers in a ``live`` rq.
+  - Returns the Live Run ID, information about the pipelines to run, and the status url.
+  - The status URL shows the current state of a live evaluation run and its individual pipeline runs.
 - **Output:**
   - A set of advisories affecting the requested PURL, imported directly into the database and returned as JSON.
-  - 
-<img width="1202" height="591" alt="image" src="https://github.com/user-attachments/assets/7170b44f-ad15-4fc2-9577-f8c88c3b427a" />
+  
+<img width="1202" height="768" alt="image" src="https://github.com/user-attachments/assets/524383d3-086d-466e-8b14-2d6314e9d72b" />
+<img width="729" height="511" alt="image" src="https://github.com/user-attachments/assets/38b61fc5-b5c3-414a-a372-fb2ec11e4023" />
+
+
 
 
 *Flow of API endpoint: selecting compatible live importers and executing them in parallel.*
